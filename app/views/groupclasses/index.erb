@@ -1,0 +1,9 @@
+<h3>All classes:</h3>
+
+<%Groupclass.all.each do |groupclass|%>
+   <%spots = groupclass.max_students - groupclass.students.size%>
+   <%status = spots>0?"#{spots} spots available":"FULL!" %>
+<ul>
+<li><a href="/groupclass/<%=groupclass.id%>"><%=groupclass.name%></a> - <%=status%></li>
+</ul>
+<%end%>

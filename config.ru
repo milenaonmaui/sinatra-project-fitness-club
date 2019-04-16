@@ -6,5 +6,6 @@ end
 
 use Rack::MethodOverride
 use InstructorsController
-use UsersController
+use StudentsController
+use GroupclassController
 run ApplicationController
