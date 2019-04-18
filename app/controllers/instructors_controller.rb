@@ -1,9 +1,14 @@
 class InstructorsController < ApplicationController
   get '/instructors' do
-    erb :'instructors/login'
+    if logged_in? && session[:instructor]
+        @instructor = current_user
+        erb :'instructors/index'
+    else
+        erb :'/instructors/login'
+    end
   end
 
-  post '/instructors/show' do
+  get '/instructors/show' do
     binding.pry
   end
 
@@ -12,6 +17,7 @@ class InstructorsController < ApplicationController
     @instructor = Instructor.find_by(:email => params[:email])
     if @instructor && @instructor.authenticate(params[:password])
       session[:user_id] = @instructor.id
+      session[:instructor] = true
       erb :'/instructors/index'
     else
       redirect '/'

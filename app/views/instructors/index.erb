@@ -1,5 +1,10 @@
-<h2>Welcome, <%=@instructor.name%>! </h2>
-<h4>Yuor classes:</h4>
-<%@instructor.groupclasses.each do |grclass|%>
+<h2>Welcome, <%=current_user.name%>! </h2>
+<h4>Your classes:</h4>
+<div>
+<%current_user.groupclasses.each do |grclass|%>
 <p><a href='/groupclasses/<%=grclass.id%>/show'><%=grclass.name%></a></p>
 <%end%>
+</div>
+<div>
+    <a href ='/logout' color="red">Log Out</a>  
+</div>

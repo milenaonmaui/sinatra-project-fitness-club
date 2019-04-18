@@ -18,7 +18,12 @@ class ApplicationController < Sinatra::Base
         binding.pry
       end
     end
-
+    get '/logout' do
+      if logged_in?
+        session.destroy
+      end
+      redirect to '/'
+    end
     
     helpers do
       def logged_in?
@@ -26,7 +31,11 @@ class ApplicationController < Sinatra::Base
       end
   
       def current_user
-        @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+        if session[:instructor]
+            @current_user ||= Instructor.find_by(id: session[:user_id]) if session[:user_id]
+        else
+            @current_user ||= Student.find_by(id: session[:user_id]) if session[:user_id]
+        end
       end
   
     end
