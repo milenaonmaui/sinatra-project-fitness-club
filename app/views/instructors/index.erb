@@ -1,0 +1,5 @@
+<h2>Welcome, <%=@instructor.name%>! </h2>
+<h4>Yuor classes:</h4>
+<%@instructor.groupclasses.each do |grclass|%>
+<p><a href='/groupclasses/<%=grclass.id%>/show'><%=grclass.name%></a></p>
+<%end%>

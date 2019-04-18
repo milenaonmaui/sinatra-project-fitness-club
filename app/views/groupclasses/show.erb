@@ -1,0 +1,5 @@
+<h2><%=@groupclass.name%></h2>
+<h4>Instructor: <%=Instructor.find(@groupclass.instructor_id).name%></h4>
+<h4>Maximum students: <%=@groupclass.max_students%></h4>
+<h4>Currently signed up <%=@groupclass.students.size%> students </h4>
+<h4>Spots available: <%=@groupclass.spots_available%>
