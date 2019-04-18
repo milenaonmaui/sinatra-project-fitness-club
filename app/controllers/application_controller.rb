@@ -37,7 +37,11 @@ class ApplicationController < Sinatra::Base
             @current_user ||= Student.find_by(id: session[:user_id]) if session[:user_id]
         end
       end
-  
+      
+      def isInstructor?
+        session[:instructor]
+      end
+
     end
   
   end
