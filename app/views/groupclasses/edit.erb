@@ -1,0 +1,20 @@
+<form method="POST" action="/groupclasses/<%=@groupclass.id%>">
+  <input id="hidden" type="hidden" name="_method" value="patch" />
+
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" value="<%=@groupclass.name%>" />
+
+  <label for="class_type">Type:</label>
+        <%ctype=@groupclass.class_type%>
+        <select id="class_type" name="class_type">
+            <option value="Yoga" <%='selected' if ctype=="Yoga"%>>Yoga</option>
+            <option value="Spin" <%='selected' if ctype=="Spin"%>>Spin</option>
+            <option value="Barre" <%='selected' if ctype=="Barre"%>>Barre</option>
+            <option value="FusionFit" <%='selected' if ctype=="FusionFit"%>>FisionFit</option>
+        </select> 
+
+  <label for="max_students">Max students</label>
+  <input type="text" id="max_students" name="max_students" value="<%=@groupclass.max_students%>" />
+
+  <input type="submit" value="submit" />
+</form>

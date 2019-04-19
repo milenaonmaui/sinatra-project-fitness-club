@@ -4,6 +4,7 @@
 <h4>Maximum students: <%=@groupclass.max_students%></h4>
 <h4>Currently signed up <%=@groupclass.students.size%> students </h4>
 <h4>Spots available: <%=@groupclass.spots_available%>
+<br>
 <%if isInstructor? && current_user==instructor%>
     <a href="/groupclasses/<%=@groupclass.id%>/edit">Edit Class</a>
 <%end%>

@@ -6,11 +6,10 @@ class GroupclassController < ApplicationController
 
     post '/groupclasses' do
         if isInstructor?
-            binding.pry
             @groupclass = Groupclass.new(params)
             @groupclass.instructor_id=current_user.id
             @groupclass.save
-            redirect '/groupclasses/#{@groupclass.id}/show'
+            redirect to "/groupclasses/#{@groupclass.id}/show"
         else
             redirect '/'
         end
@@ -25,11 +24,28 @@ class GroupclassController < ApplicationController
     end
 
     get '/groupclasses/:id/edit' do
-
+        if isInstructor? 
+           @groupclass= Groupclass.find_by(:id=>params[:id])
+           if current_user.groupclasses.include?(@groupclass)
+               erb :'/groupclasses/edit'
+           end
+        else
+            redirect '/'
+        end        
     end
 
     get '/groupclasses/:id/show' do
         @groupclass = Groupclass.find_by(:id=>params[:id])
         erb :'/groupclasses/show'
     end
+
+    patch '/groupclasses/:id' do  
+        @groupclass = Groupclass.find_by(:id=>params[:id])
+        @groupclass.name = params[:name]
+        @groupclass.class_type = params[:class_type]
+        @groupclass.max_students = params[:max_students]
+        @groupclass.save
+        redirect to "/groupclasses/#{@groupclass.id}/show"
+    end
+    
 end
