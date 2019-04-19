@@ -1,6 +1,25 @@
 <h2>Add a new Group Class</h2>
-<form>
-<label for="name">Name:</label>
-<input type="text" name="name">
-<in[ut type="submit" value="Submit">
+<form action='/groupclasses' method = "POST">
+<div >
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+</div>
+
+<div>
+        <label for="class_type">Type:</label>
+        <select id="class_type" name="class_type">
+            <option value="Yoga">Yoga</option>
+            <option value="Spin">Spin</option>
+            <option value="Barre">Barre</option>
+            <option value="FusionFit">FisionFit</option>
+        </select> 
+    </div>
+    
+    <div >
+        <label for="max_students">Max students:</label>
+        <input type="text" name="max_students">
+    </div>
+
+<input type="submit" value="Submit">
 </form>
+

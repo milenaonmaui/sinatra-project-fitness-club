@@ -4,6 +4,18 @@ class GroupclassController < ApplicationController
         erb :'groupclasses/index'
     end
 
+    post '/groupclasses' do
+        if isInstructor?
+            binding.pry
+            @groupclass = Groupclass.new(params)
+            @groupclass.instructor_id=current_user.id
+            @groupclass.save
+            redirect '/groupclasses/#{@groupclass.id}/show'
+        else
+            redirect '/'
+        end
+    end
+
     get '/groupclasses/new' do
         if isInstructor?
             erb :'groupclasses/new'
