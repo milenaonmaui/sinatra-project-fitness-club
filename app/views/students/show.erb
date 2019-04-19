@@ -1,0 +1,14 @@
+
+<h2>Welcome, <%=@student.name%>! </h2>
+<hr>
+<div>
+    <a href ='/logout'>Log Out</a>  
+</div>
+    
+<h4>Your classes:</h4>
+
+<div>
+    <%@student.groupclasses.each do |grclass|%>
+        <p><a href='/groupclasses/<%=grclass.id%>/show'><%=grclass.name%></a></p>
+    <%end%>
+</div>

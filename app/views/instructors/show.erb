@@ -1,0 +1,16 @@
+<%if current_user == @instructor%>
+    <h2>Welcome, <%=current_user.name%>! </h2>
+    <hr>
+    <div>
+        <a href ='/groupclasses/new'>Add Class  </a><a href ='/logout'>Log Out</a>  
+    </div>
+    <hr>
+    <h4>Your classes:</h4>
+<%else%>
+    <h4>Classes by <%=@instructor.name%></h4>
+<%end%>
+<div>
+    <%@instructor.groupclasses.each do |grclass|%>
+        <p><a href='/groupclasses/<%=grclass.id%>/show'><%=grclass.name%></a></p>
+    <%end%>
+</div>

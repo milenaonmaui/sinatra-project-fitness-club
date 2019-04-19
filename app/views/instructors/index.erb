@@ -1,10 +1,16 @@
-<h2>Welcome, <%=current_user.name%>! </h2>
-<h4>Your classes:</h4>
-<div>
-<%current_user.groupclasses.each do |grclass|%>
-<p><a href='/groupclasses/<%=grclass.id%>/show'><%=grclass.name%></a></p>
+<h3>All instructors:</h3>
+<%Instructor.all.each do |instructor|%>
+<ul>
+<li><a href='/instructors/<%=instructor.id%>/show'><%=instructor.name%></a></li>
+</ul>
 <%end%>
-</div>
-<div>
-    <a href ='/groupclasses/new'>Add Class  </a><a href ='/logout'>Log Out</a>  
-</div>
+
+<br>
+<h4>Instructor Log In:</h4>
+<form action='/instructors/login' method='POST'>
+    <label for='email'>Email:</label>
+    <input type='email' name='email'>
+    <label for='password'>Password:</label>
+    <input type='password' name = 'password'>
+    <input type='submit' value='Log In'>
+</form>
