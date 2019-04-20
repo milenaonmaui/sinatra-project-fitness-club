@@ -7,7 +7,7 @@
 <br>
 <%if isInstructor? && current_user==instructor%>
     <a href="/groupclasses/<%=@groupclass.id%>/edit">Edit Class</a>
-<%else%>
+<%elsif @groupclass.spots_available>0%>
     <form method="POST" action="/groupclasses/<%=@groupclass.id%>/signup">
         <input id="hidden" type="hidden" name="_method" value="patch" />
         <input type='submit' value='Sign Up'>
