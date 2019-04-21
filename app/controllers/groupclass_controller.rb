@@ -1,30 +1,34 @@
+require 'rack-flash'
 class GroupclassController < ApplicationController
+    use Rack::Flash
 
     get '/groupclasses' do
         erb :'groupclasses/index'
     end
 
     post '/groupclasses' do
-        if isInstructor?
+        if is_instructor?
             @groupclass = Groupclass.new(params)
             @groupclass.instructor_id=current_user.id
             @groupclass.save
             redirect to "/groupclasses/#{@groupclass.id}/show"
         else
-            redirect '/'
+            flash[:message] = "You have to be logged in as an instructor to add a class"
+            redirect to '/groupclasses'
         end
     end
 
     get '/groupclasses/new' do
-        if isInstructor?
+        if is_instructor?
             erb :'groupclasses/new'
         else
-            redirect '/'
+            flash[:message] = "You have to be logged in as an instructor to add a class"
+            redirect to '/groupclasses'
         end
     end
 
     get '/groupclasses/:id/edit' do
-        if isInstructor? 
+        if is_instructor? 
            @groupclass= Groupclass.find_by(:id=>params[:id])
            if current_user.groupclasses.include?(@groupclass)
                erb :'/groupclasses/edit'
@@ -51,7 +55,7 @@ class GroupclassController < ApplicationController
             redirect to "/students/login"
         end 
     end
-    
+
     patch '/groupclasses/:id' do  
         @groupclass = Groupclass.find_by(:id=>params[:id])
         @groupclass.name = params[:name]
