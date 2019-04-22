@@ -1,0 +1,25 @@
+<h2>Create New Student Account</h2>
+<form action='/students/new' method = "POST"
+oninput='password1.setCustomValidity(password1.value != password.value ? "Passwords do not match." : "")'>
+<div >
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+</div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
+    </div>
+    
+    <div >
+        <label for="password">Password:</label>
+        <input type="password" name="password">
+    </div>
+    <div >
+        <label for="password1">Confirm Password:</label>
+        <input type="password" name="password1">
+    </div>
+
+<input type="submit" value="Submit">
+</form>
+
