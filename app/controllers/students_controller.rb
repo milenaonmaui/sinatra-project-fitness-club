@@ -28,7 +28,7 @@ class StudentsController < ApplicationController
         if !logged_in?
             erb :'students/new'
         else
-            flash[:message] = "You are logged in as #{current_user.email}"
+            flash[:info] = "You are logged in as #{current_user.email}"
             redirect to '/students/show'
         end
     end
@@ -42,8 +42,6 @@ class StudentsController < ApplicationController
         else
             flash[:danger]=@student.errors.full_messages[0]
             redirect to '/students/new'
-        end
-            
-        
+        end    
     end
 end

@@ -55,7 +55,18 @@ class GroupclassController < ApplicationController
             redirect to "/students/login"
         end 
     end
-
+    
+    patch '/groupclasses/:id/cancel' do
+        if logged_in?
+            @groupclass = Groupclass.find_by(:id=>params[:id])
+            @groupclass.students.delete(current_user)
+            @groupclass.save
+            redirect to "/groupclasses/#{@groupclass.id}/show"
+        else
+            redirect to "/students/login"
+        end 
+    end
+    
     patch '/groupclasses/:id' do  
         @groupclass = Groupclass.find_by(:id=>params[:id])
         @groupclass.name = params[:name]

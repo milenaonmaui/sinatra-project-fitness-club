@@ -5,8 +5,13 @@
 <h4>Currently signed up <%=@groupclass.students.size%> students </h4>
 <h4>Spots available: <%=@groupclass.spots_available%>
 <br>
-<%if isInstructor? && current_user==instructor%>
+<%if is_instructor? && current_user==instructor%>
     <a href="/groupclasses/<%=@groupclass.id%>/edit">Edit Class</a>
+<%elsif @groupclass.students.include?(current_user)%>
+    <form method="POST" action="/groupclasses/<%=@groupclass.id%>/cancel">
+        <input id="hidden" type="hidden" name="_method" value="patch" />
+        <input type='submit' value='Cancel'>
+    </form>
 <%elsif @groupclass.spots_available>0%>
     <form method="POST" action="/groupclasses/<%=@groupclass.id%>/signup">
         <input id="hidden" type="hidden" name="_method" value="patch" />
