@@ -22,7 +22,7 @@ class GroupclassController < ApplicationController
         if is_instructor?
             erb :'groupclasses/new'
         else
-            flash[:message] = "You have to be logged in as an instructor to add a class"
+            flash[:info] = "You have to be logged in as an instructor to add a class"
             redirect to '/groupclasses'
         end
     end
@@ -50,6 +50,7 @@ class GroupclassController < ApplicationController
               @groupclass.students<< current_user
               @groupclass.save
             end
+            flash[:success] = "Successfully signed up for class"
             redirect to "/groupclasses/#{@groupclass.id}/show"
         else
             redirect to "/students/login"
@@ -61,12 +62,24 @@ class GroupclassController < ApplicationController
             @groupclass = Groupclass.find_by(:id=>params[:id])
             @groupclass.students.delete(current_user)
             @groupclass.save
+            flash[:success] = "Class cancelled successfully"
             redirect to "/groupclasses/#{@groupclass.id}/show"
         else
             redirect to "/students/login"
         end 
     end
-    
+
+    delete '/groupclasses/:id/delete' do  
+        @groupclass = Groupclass.find_by(:id=>params[:id])
+        if @groupclass && @groupclass.instructor == current_user
+            @groupclass.delete
+            flash[:success]="Class deleted successfully"
+        else
+            flash[:danger]="You have to be logged in as the class instructor to delete a class"
+        end
+        redirect to '/instructors'
+    end
+
     patch '/groupclasses/:id' do  
         @groupclass = Groupclass.find_by(:id=>params[:id])
         @groupclass.name = params[:name]
