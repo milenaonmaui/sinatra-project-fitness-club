@@ -34,15 +34,16 @@ class StudentsController < ApplicationController
     end
 
     post '/students/new' do
-        
-        if is_instructor?
-            @groupclass = Groupclass.new(params)
-            @groupclass.instructor_id=current_user.id
-            @groupclass.save
-            redirect to "/groupclasses/#{@groupclass.id}/show"
+        @student = Student.new(:name => params[:name], :email => params[:email], :password => params[:password])
+        if  @student.save
+            session[:user_id] = @student.id
+            flash[:success] = "Student account created successfully!"
+            redirect to '/students/show'
         else
-            flash[:message] = "You have to be logged in as an instructor to add a class"
-            redirect to '/groupclasses'
+            flash[:danger]=@student.errors.full_messages[0]
+            redirect to '/students/new'
         end
+            
+        
     end
 end

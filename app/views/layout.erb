@@ -23,9 +23,17 @@
           <a class="navbar-brand" href="/students/show">Students</a>
           <a class="navbar-brand" href="/students/new">Sign Up</a>
       </nav>
+      <% %w[success danger warning info].each do |key| %>
+        <% if flash[key] %>
+          <div class="alert alert-<%=key%>">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <%=flash[key] %>
+          </div>
+        <% end %>
+      <% end %>
       <% if flash.has?(:message) %>
         <div class="alert alert-info">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          <
           <%= flash[:message] %>
         </div>
       <% end %>
