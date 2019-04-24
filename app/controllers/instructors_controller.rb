@@ -21,7 +21,8 @@ class InstructorsController < ApplicationController
       session[:instructor] = true
       erb :'/instructors/show'
     else
-      redirect '/'
+      flash[:danger] = "Invalid email or password"
+      redirect '/instructors'
     end
   end
 
