@@ -31,13 +31,9 @@
           </div>
         <% end %>
       <% end %>
-      <% if flash.has?(:message) %>
-        <div class="alert alert-info">
-          <
-          <%= flash[:message] %>
-        </div>
-      <% end %>
+      <div>
       <%= yield %>
+      </div>
     </div>
 
   </body>
