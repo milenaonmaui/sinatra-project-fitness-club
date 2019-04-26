@@ -1,8 +1,8 @@
 <h3>All instructors:</h3>
 <%Instructor.all.each do |instructor|%>
-<ul>
-<li><a href='/instructors/<%=instructor.id%>/show'><%=instructor.name%></a></li>
-</ul>
+
+<div><img src="/instr-patty.png" alt="Picture"  style="width:64px;height:64px;float:none;"> <a href='/instructors/<%=instructor.id%>/show'><%=instructor.name%></a></div>
+
 <%end%>
 
 <br>
