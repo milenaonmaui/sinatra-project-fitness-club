@@ -44,6 +44,13 @@ class ApplicationController < Sinatra::Base
         session[:instructor]
       end
 
+      def redirect_if_not_instructor
+        if !is_instructor?
+          flash[:message] = "You have to be logged in as an instructor to add a class"
+          redirect to '/groupclasses'
+        end
+      end
+
     end
   
   end

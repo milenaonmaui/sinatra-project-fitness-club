@@ -7,31 +7,29 @@ class GroupclassController < ApplicationController
     end
 
     post '/groupclasses' do
-        if is_instructor?
+        redirect_if_not_instructor
+        
             @groupclass = Groupclass.new(params)
             @groupclass.instructor_id=current_user.id
-            @groupclass.save
-            redirect to "/groupclasses/#{@groupclass.id}/show"
-        else
-            flash[:message] = "You have to be logged in as an instructor to add a class"
-            redirect to '/groupclasses'
-        end
-    end
+            if @groupclass.save
+                redirect to "/groupclasses/#{@groupclass.id}/show"
+            else
+                redirect to "/groupclasses/new"
+            end
+    end   
 
     get '/groupclasses/new' do
-        if is_instructor?
-            erb :'groupclasses/new'
-        else
-            flash[:info] = "You have to be logged in as an instructor to add a class"
-            redirect to '/groupclasses'
-        end
+        redirect_if_not_instructor
+        erb :'groupclasses/new'        
     end
 
     get '/groupclasses/:id/edit' do
         if is_instructor? 
            @groupclass= Groupclass.find_by(:id=>params[:id])
            if current_user.groupclasses.include?(@groupclass)
-               erb :'/groupclasses/edit'
+               erb :'/groupclasses/edit'  
+           else
+               redirect "/groupclasses/#{params[:id]}/show"
            end
         else
             redirect '/'
@@ -82,10 +80,12 @@ class GroupclassController < ApplicationController
 
     patch '/groupclasses/:id' do  
         @groupclass = Groupclass.find_by(:id=>params[:id])
-        @groupclass.name = params[:name]
-        @groupclass.class_type = params[:class_type]
-        @groupclass.max_students = params[:max_students]
-        @groupclass.save
+        if @groupclass && @groupclass.instructor == current_user
+            @groupclass.name = params[:name]
+            @groupclass.class_type = params[:class_type]
+            @groupclass.max_students = params[:max_students]
+            @groupclass.save
+        end
         redirect to "/groupclasses/#{@groupclass.id}/show"
     end
 
